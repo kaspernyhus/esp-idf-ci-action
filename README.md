@@ -60,3 +60,7 @@ Overriding this is useful for running other commands via github actions. Example
 ```yaml
 command: esptool.py merge_bin -o ../your_final_output.bin @flash_args
 ```
+
+### `access_token`
+
+Optional: access token that IDF Component Manager can use to fetch components from a private repo
