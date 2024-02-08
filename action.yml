@@ -34,6 +34,6 @@ runs:
         docker run -t -e IDF_TARGET="${IDF_TARGET}" -v $SSH_AUTH_SOCK:/ssh-agent \
         -e SSH_AUTH_SOCK=/ssh-agent -v "${GITHUB_WORKSPACE}:/app/${{ github.repository }}" \
         -w "/app/${{ github.repository }}/${{ inputs.path }}" espressif/idf:${{ inputs.esp_idf_version }} \
-        /bin/bash -c 'git config --global --add safe.directory "*" && ssh-keyscan github.com >> ~/.ssh/known_hosts && \
+        /bin/bash -c 'git config --global --add safe.directory "*" && \
         ${{ inputs.command }}'
       shell: bash
