@@ -4,7 +4,7 @@ branding:
   color: red
   icon: wifi
 inputs:
-  ssh:
+  ssh_auth_sock:
     description: "Forward ssh agent into Docker container"
     default: ""
     required: false
@@ -31,9 +31,14 @@ runs:
     - run: |
         export IDF_TARGET=$(echo "${{ inputs.target }}" | tr '[:upper:]' '[:lower:]' | tr -d '_-')
         export SSH_AUTH_SOCK=${{ inputs.ssh_auth_sock }}
-        docker run -t -e IDF_TARGET="${IDF_TARGET}" -v $SSH_AUTH_SOCK:/ssh-agent \
-        -e SSH_AUTH_SOCK=/ssh-agent -v "${GITHUB_WORKSPACE}:/app/${{ github.repository }}" \
-        -w "/app/${{ github.repository }}/${{ inputs.path }}" espressif/idf:${{ inputs.esp_idf_version }} \
+        docker run -t \
+        -e IDF_TARGET="${IDF_TARGET}" \
+        -v $SSH_AUTH_SOCK:/ssh-agent \
+        -e SSH_AUTH_SOCK=/ssh-agent \
+        -u $UID \
+        -e HOME=/tmp \
+        -v ${GITHUB_WORKSPACE}:/project \
+        -w /project espressif/idf:${{ inputs.esp_idf_version }} \
         /bin/bash -c 'git config --global --add safe.directory "*" && \
         ${{ inputs.command }}'
       shell: bash
