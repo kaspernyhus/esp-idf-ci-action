@@ -35,9 +35,9 @@ runs:
         -e IDF_TARGET="${IDF_TARGET}" \
         -v $SSH_AUTH_SOCK:/ssh-agent \
         -e SSH_AUTH_SOCK=/ssh-agent \
+        -u $UID \
         -e HOME=/tmp \
         -v ${GITHUB_WORKSPACE}:/project \
         -w /project espressif/idf:${{ inputs.esp_idf_version }} \
-        /bin/bash -c 'git config --global --add safe.directory "*" && \
-        ${{ inputs.command }}'
+        /bin/bash -c '${{ inputs.command }}'
       shell: bash
