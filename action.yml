@@ -35,7 +35,6 @@ runs:
         -e IDF_TARGET="${IDF_TARGET}" \
         -v $SSH_AUTH_SOCK:/ssh-agent \
         -e SSH_AUTH_SOCK=/ssh-agent \
-        -u $UID \
         -e HOME=/tmp \
         -v ${GITHUB_WORKSPACE}:/project \
         -w /project espressif/idf:${{ inputs.esp_idf_version }} \
